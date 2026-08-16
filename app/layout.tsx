@@ -3,10 +3,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Potato Archives • Home",
-  description: "The official home of our group's lore, member profiles, inside jokes, and shared history.",
+  description: "The official home of our group's lore, members, inside jokes, and history.",
   openGraph: {
     title: "Potato Archives",
-    description: "The official home of our group's lore, member profiles, inside jokes, and shared history.",
+    description: "The official home of our group's lore, members, inside jokes, and history.",
     url: "https://potato-archives.vercel.app",
     siteName: "Potato Archives",
     images: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Potato Archives",
-    description: "The official home of our group's lore, member profiles, inside jokes, and shared history.",
+    description: "The official home of our group's lore, members, inside jokes, and history.",
     images: ["/og-image.png"],
   },
 };
