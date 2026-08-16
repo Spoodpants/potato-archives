@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Potato Archives",
     description: "The official home of our group's lore, members, inside jokes, and history.",
-    images: ["/og-image.png"],
+    images: ["/potato.png"],
   },
 };
 
