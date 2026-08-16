@@ -49,7 +49,7 @@ export default function Home() {
           Potato Archives
         </h1>
         <p className="text-neutral-400 text-base md:text-lg max-w-3xl mx-auto font-normal">
-          The official home of our group's lore, member profiles, inside jokes, and shared history.
+          The official home of our group's lore, members, inside jokes, and history.
         </p>
       </header>
 
