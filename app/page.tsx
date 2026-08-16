@@ -1,72 +1,70 @@
 'use client';
 
 export default function Home() {
-  // Add or edit group members here
   const groupMembers = [
     {
       name: "Harry",
       role: "Group Member",
-      image: "/harry.jpg", // Add harry.jpg to your public folder
-      bio: "Add Harry's main description, running jokes, or stats here.",
+      image: "/harry.jpg",
+      bio: "Harry desc",
     },
     {
       name: "Matheesa",
       role: "Group Member",
-      image: "/matheesa.jpg", // Add matheesa.jpg to your public folder
-      bio: "Add Matheesa's main description, running jokes, or stats here.",
+      image: "/matheesa.jpg",
+      bio: "Matheesa desc",
     },
     {
       name: "Maximus",
       role: "Group Member",
-      image: "/maximus.jpg", // Add maximus.jpg to your public folder
-      bio: "Add Maximus's main description, running jokes, or stats here.",
+      image: "/maximus.jpg",
+      bio: "Maximus desc",
     },
     {
       name: "Samson",
       role: "Group Member",
-      image: "/samson.jpg", // Add samson.jpg to your public folder
-      bio: "Add Samson's main description, running jokes, or stats here.",
+      image: "/samson.jpg",
+      bio: "Samson desc",
     },
     {
       name: "Taylor",
       role: "Group Member",
-      image: "/taylor.jpg", // Add taylor.jpg to your public folder
-      bio: "Add Taylor's main description, running jokes, or stats here.",
+      image: "/taylor.jpg",
+      bio: "Taylor desc",
     },
   ];
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 p-6 md:p-12 max-w-5xl mx-auto space-y-12">
+    <main className="min-h-screen bg-neutral-900 text-neutral-100 p-6 md:p-12 max-w-4xl mx-auto space-y-12">
       {/* Title & Description Header */}
-      <header className="border-b border-slate-800 pb-8 text-center space-y-3">
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-amber-400">
+      <header className="border-b border-neutral-800 pb-8 text-center space-y-3">
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-yellow-300">
           Potato Archives
         </h1>
-        <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto">
-          The official home of our group's lore, member profiles, inside jokes, and shared history.
+        <p className="text-neutral-400 text-base md:text-lg max-w-2xl mx-auto">
+          The official home of our group's lore, members, inside jokes, and shared history.
         </p>
       </header>
 
-      {/* Member Boxes Grid */}
+      {/* Member Boxes - Full Width Vertical Stack */}
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-slate-200 text-center md:text-left">
+        <h2 className="text-2xl font-bold text-neutral-200 text-left">
           Group Members
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="flex flex-col gap-6">
           {groupMembers.map((member, index) => (
             <div
               key={index}
-              className="bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col sm:flex-row gap-5 items-center sm:items-start shadow-lg hover:border-slate-700 transition"
+              className="bg-neutral-800 border border-neutral-700 rounded-xl p-6 flex flex-col sm:flex-row gap-6 items-start shadow-xl hover:border-neutral-600 transition w-full"
             >
               {/* Image Container */}
-              <div className="w-28 h-28 relative rounded-lg overflow-hidden bg-slate-800 flex-shrink-0 border border-slate-700">
+              <div className="w-32 h-32 relative rounded-lg overflow-hidden bg-neutral-900 flex-shrink-0 border border-neutral-700">
                 <img
                   src={member.image}
                   alt={member.name}
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    // Fallback placeholder if image is missing
                     e.currentTarget.src =
                       "https://via.placeholder.com/150?text=" + member.name;
                   }}
@@ -74,16 +72,16 @@ export default function Home() {
               </div>
 
               {/* Information */}
-              <div className="space-y-2 text-center sm:text-left flex-1">
-                <div>
-                  <h3 className="text-xl font-bold text-amber-400">
+              <div className="space-y-3 text-left flex-1 w-full">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-2xl font-bold text-white">
                     {member.name}
                   </h3>
-                  <span className="text-xs font-medium text-slate-400 bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700 inline-block mt-1">
+                  <span className="text-xs font-medium text-neutral-400 bg-neutral-900 px-3 py-1 rounded-full border border-neutral-700">
                     {member.role}
                   </span>
                 </div>
-                <p className="text-sm text-slate-300 leading-relaxed">
+                <p className="text-sm md:text-base text-neutral-300 leading-relaxed whitespace-pre-line">
                   {member.bio}
                 </p>
               </div>
