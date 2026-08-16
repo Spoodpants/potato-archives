@@ -6,47 +6,47 @@ export default function Home() {
       name: "Harry",
       role: "Group Member",
       image: "/harry.jpg",
-      bio: "Harry desc",
+      bio: "Add Harry's main description, running jokes, or stats here.",
     },
     {
       name: "Matheesa",
       role: "Group Member",
       image: "/matheesa.jpg",
-      bio: "Matheesa desc",
+      bio: "Add Matheesa's main description, running jokes, or stats here.",
     },
     {
       name: "Maximus",
       role: "Group Member",
       image: "/maximus.jpg",
-      bio: "Maximus desc",
+      bio: "Add Maximus's main description, running jokes, or stats here.",
     },
     {
       name: "Samson",
       role: "Group Member",
       image: "/samson.jpg",
-      bio: "Samson desc",
+      bio: "Add Samson's main description, running jokes, or stats here.",
     },
     {
       name: "Taylor",
       role: "Group Member",
       image: "/taylor.jpg",
-      bio: "Taylor desc",
+      bio: "Add Taylor's main description, running jokes, or stats here.",
     },
   ];
 
   return (
-    <main className="min-h-screen bg-neutral-900 text-neutral-100 p-6 md:p-12 max-w-4xl mx-auto space-y-12">
+    <main className="min-h-screen bg-neutral-900 text-neutral-100 p-6 md:p-12 max-w-7xl mx-auto space-y-12">
       {/* Title & Description Header */}
       <header className="border-b border-neutral-800 pb-8 text-center space-y-3">
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-yellow-300">
+        <h1 className="text-4xl md:text-6xl font-black tracking-tight text-yellow-300 drop-shadow-sm">
           Potato Archives
         </h1>
-        <p className="text-neutral-400 text-base md:text-lg max-w-2xl mx-auto">
-          The official home of our group's lore, members, inside jokes, and shared history.
+        <p className="text-neutral-400 text-base md:text-lg max-w-3xl mx-auto font-normal">
+          The official home of our group's lore, member profiles, inside jokes, and shared history.
         </p>
       </header>
 
-      {/* Member Boxes - Full Width Vertical Stack */}
+      {/* Member Boxes - Wide Vertical Stack */}
       <section className="space-y-6">
         <h2 className="text-2xl font-bold text-neutral-200 text-left">
           Group Members
