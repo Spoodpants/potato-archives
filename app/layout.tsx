@@ -1,29 +1,42 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Potato Archives • Home",
   description: "The official home of our group's lore, member profiles, inside jokes, and shared history.",
+  openGraph: {
+    title: "Potato Archives",
+    description: "The official home of our group's lore, member profiles, inside jokes, and shared history.",
+    url: "https://potato-archives.vercel.app",
+    siteName: "Potato Archives",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Potato Archives Preview",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Potato Archives",
+    description: "The official home of our group's lore, member profiles, inside jokes, and shared history.",
+    images: ["/og-image.png"],
+  },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en">
+      <body className="bg-neutral-900 text-neutral-100 antialiased">
+        {children}
+      </body>
     </html>
   );
 }
