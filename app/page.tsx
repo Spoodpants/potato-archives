@@ -1,20 +1,8 @@
-import Image from "next/image";
+'use client';
 
 export default function Home() {
   // Add or edit group members here
   const groupMembers = [
-    {
-      name: "Ben",
-      role: "Group Member",
-      image: "/ben.jpg", // Add ben.jpg to your public folder
-      bio: "Add Ben's main description, running jokes, or stats here.",
-    },
-    {
-      name: "Aryaman",
-      role: "Group Member",
-      image: "/aryaman.jpg", // Add aryaman.jpg to your public folder
-      bio: "Add Aryaman's main description, running jokes, or stats here.",
-    },
     {
       name: "Harry",
       role: "Group Member",
