@@ -75,10 +75,20 @@ export default function SteamClient() {
     });
   });
 
-  const totalUniqueFamilyGames = Object.keys(gameOwnership).length;
+  const allGameList = Object.entries(gameOwnership).map(([appidStr, info]) => ({
+    appid: Number(appidStr),
+    ...info,
+  }));
 
-  // Calculate per-member breakdown
-  const memberStats = data.map((member) => {
+  const totalUniqueFamilyGames = allGameList.length;
+
+  // Calculate Overlaps (Games owned by 2 or more people)
+  const sharedGamesCount = allGameList.filter(
+    (g) => g.owners.length > 1 && !g.isF2P
+  ).length;
+
+  // Pre-pass: compute unique counts for everyone
+  const memberRawStats = data.map((member) => {
     const totalOwned = member.games.length;
     let uniqueCount = 0;
     let unsharedCount = 0;
@@ -99,10 +109,6 @@ export default function SteamClient() {
       }
     });
 
-    const sharePercent = totalUniqueFamilyGames > 0
-      ? ((uniqueCount / totalUniqueFamilyGames) * 100).toFixed(1)
-      : '0';
-
     return {
       id: member.id,
       name: member.name,
@@ -110,23 +116,41 @@ export default function SteamClient() {
       uniqueCount,
       unsharedCount,
       f2pCount,
-      sharePercent,
     };
   });
 
-  // Filter game list
-  const allGameList = Object.entries(gameOwnership).map(([appidStr, info]) => ({
-    appid: Number(appidStr),
-    ...info,
-  }));
+  // Total unique paid games provided across ALL members
+  const totalUniqueContributions = memberRawStats.reduce(
+    (sum, m) => sum + m.uniqueCount,
+    0
+  );
 
+  // Finalize member stats with normalized share percentage (sums to 100%)
+  const memberStats = memberRawStats.map((stat) => {
+    const sharePercent =
+      totalUniqueContributions > 0
+        ? ((stat.uniqueCount / totalUniqueContributions) * 100).toFixed(1)
+        : '0.0';
+
+    const exclusivityRatio =
+      stat.totalOwned > 0
+        ? ((stat.uniqueCount / stat.totalOwned) * 100).toFixed(0)
+        : '0';
+
+    return {
+      ...stat,
+      sharePercent,
+      exclusivityRatio,
+    };
+  });
+
+  // Filter game list for grid display
   const filteredGames = allGameList.filter((game) => {
     const matchesSearch = game.name.toLowerCase().includes(searchTerm.toLowerCase());
-
     if (!matchesSearch) return false;
 
     if (filterType === 'unique') return game.owners.length === 1 && !game.isF2P;
-    if (filterType === 'shared') return game.owners.length > 1;
+    if (filterType === 'shared') return game.owners.length > 1 && !game.isF2P;
     if (filterType === 'f2p') return game.isF2P;
 
     return true;
@@ -134,36 +158,64 @@ export default function SteamClient() {
 
   return (
     <div className="space-y-10">
+      {/* Group Global Stats Summary */}
+      <section className="bg-neutral-800/80 border border-neutral-700 rounded-xl p-5 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+        <div>
+          <p className="text-xs text-neutral-400 uppercase font-bold tracking-wider">Total Library</p>
+          <p className="text-2xl font-black text-yellow-300">{totalUniqueFamilyGames}</p>
+        </div>
+        <div>
+          <p className="text-xs text-neutral-400 uppercase font-bold tracking-wider">Unique Paid Titles</p>
+          <p className="text-2xl font-black text-green-400">{totalUniqueContributions}</p>
+        </div>
+        <div>
+          <p className="text-xs text-neutral-400 uppercase font-bold tracking-wider">Shared / Overlap</p>
+          <p className="text-2xl font-black text-blue-400">{sharedGamesCount}</p>
+        </div>
+        <div>
+          <p className="text-xs text-neutral-400 uppercase font-bold tracking-wider">Free to Play</p>
+          <p className="text-2xl font-black text-purple-400">
+            {allGameList.filter((g) => g.isF2P).length}
+          </p>
+        </div>
+      </section>
+
       {/* Overview Scorecards */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {memberStats.map((stat) => (
           <div
             key={stat.id}
-            className="bg-neutral-800 border border-neutral-700 rounded-xl p-4 space-y-3 shadow-lg"
+            className="bg-neutral-800 border border-neutral-700 rounded-xl p-4 space-y-3 shadow-lg flex flex-col justify-between"
           >
-            <div className="flex justify-between items-center border-b border-neutral-700 pb-2">
-              <h2 className="font-bold text-yellow-300 text-lg">{stat.name}</h2>
-              <span className="text-xs font-bold text-neutral-400 bg-neutral-900 px-2 py-1 rounded">
-                {stat.totalOwned} games
-              </span>
-            </div>
+            <div>
+              <div className="flex justify-between items-center border-b border-neutral-700 pb-2 mb-3">
+                <h2 className="font-bold text-yellow-300 text-lg">{stat.name}</h2>
+                <span className="text-xs font-bold text-neutral-400 bg-neutral-900 px-2 py-1 rounded">
+                  {stat.totalOwned} games
+                </span>
+              </div>
 
-            <div className="text-xs space-y-1.5 text-neutral-300">
-              <div className="flex justify-between">
-                <span>Unique Contributed:</span>
-                <span className="font-bold text-green-400">{stat.uniqueCount}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Family Share %:</span>
-                <span className="font-bold text-yellow-400">{stat.sharePercent}%</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Free to Play:</span>
-                <span className="text-neutral-400">{stat.f2pCount}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Unshared / Locked:</span>
-                <span className="text-neutral-400">{stat.unsharedCount}</span>
+              <div className="text-xs space-y-1.5 text-neutral-300">
+                <div className="flex justify-between">
+                  <span>Unique Contributed:</span>
+                  <span className="font-bold text-green-400">{stat.uniqueCount}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Family Share %:</span>
+                  <span className="font-bold text-yellow-400">{stat.sharePercent}%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Exclusivity Rate:</span>
+                  <span className="text-neutral-400">{stat.exclusivityRatio}%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Free to Play:</span>
+                  <span className="text-neutral-400">{stat.f2pCount}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Unshared / Locked:</span>
+                  <span className="text-neutral-400">{stat.unsharedCount}</span>
+                </div>
               </div>
             </div>
           </div>
