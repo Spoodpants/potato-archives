@@ -71,7 +71,7 @@ export const STEAM_MEMBERS: SteamMemberConfig[] = [
 
 // List of popular Free-to-Play AppIDs so they don't skew financial calculations
 export const FREE_TO_PLAY_APPIDS = new Set<number>([
-  // Previously Added Core F2P
+  // Core F2P
   1172470, // Apex Legends
   730,     // Counter-Strike 2
   570,     // Dota 2
@@ -84,7 +84,11 @@ export const FREE_TO_PLAY_APPIDS = new Set<number>([
   1203220, // NARAKA: BLADEPOINT
   1938090, // Call of Duty HQ / Warzone
 
-  // Screenshot 1
+  // MultiVersus AppIDs
+  1818750, // MultiVersus (Beta)
+  2420510, // MultiVersus (Full Launch)
+
+  // F2P List
   1000590, // 100 March Cats
   1488090, // 100 New Year Cats
   1170970, // 1v1.LOL
@@ -111,8 +115,6 @@ export const FREE_TO_PLAY_APPIDS = new Set<number>([
   291550,  // Brawlhalla
   2573210, // Cave Heroes
   367050,  // Clicker Heroes
-
-  // Screenshot 2
   1165980, // Coloring Game
   1599560, // Crab Game
   386180,  // Crossout
@@ -138,8 +140,6 @@ export const FREE_TO_PLAY_APPIDS = new Set<number>([
   2562470, // EPS Chess
   2617700, // FragPunk
   1192940, // FrostRunner
-
-  // Screenshot 3
   1523300, // GeoGuessr - Steam Edition
   1568590, // Goose Goose Duck
   2308940, // Graal Online Era
@@ -167,14 +167,11 @@ export const FREE_TO_PLAY_APPIDS = new Set<number>([
   1230100, // MapleStory
   612180,  // March of Empires
   2308250, // Path to Doomsday: Avengers Infinity War
-
-  // Screenshot 4
   1978590, // MARVEL SNAP
   1282270, // Merge Crafter
   2164800, // Miscrits: World of Creatures
   2228580, // Movere
   1627720, // Muck
-  1818750, // MultiVersus
   2432630, // MY HERO ULTRA RUMBLE
   277460,  // My Singing Monsters
   1381390, // Naval Action
@@ -191,8 +188,6 @@ export const FREE_TO_PLAY_APPIDS = new Set<number>([
   1961400, // PROJECT: PLAYTIME
   437220,  // Quake Champions
   1823100, // RAID: Shadow Legends
-
-  // Screenshot 5
   2109670, // Realm of Alters
   1859360, // Rec Room
   2590660, // Revolution Idle
@@ -218,11 +213,8 @@ export const FREE_TO_PLAY_APPIDS = new Set<number>([
   2881660, // SUPERVIVE
   2670630, // TCG Card Shop Simulator: Prologue
   241970,  // There Is No Game: Jam Edition 2015
-
-  // Screenshot 6
   2720230, // Throne and Liberty
   1281930, // tModLoader
-  359550,  // Rainbow Six Siege (Free Weekend / Starter edition tracking)
   1163550, // Totally Accurate Battlegrounds
   2487220, // Town of Salem 2
   838380,  // Ultimate Custom Night
