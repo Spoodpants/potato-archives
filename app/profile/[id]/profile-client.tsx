@@ -39,7 +39,6 @@ export default function ProfileClient({ memberId }: { memberId: string }) {
   const profile = PROFILES_DATA[memberId];
   const { age, zodiac } = getAgeAndZodiac(profile?.birthdate || '');
 
-  // Lanyard live status state
   const [lanyardData, setLanyardData] = useState<any>(null);
 
   useEffect(() => {
@@ -65,9 +64,11 @@ export default function ProfileClient({ memberId }: { memberId: string }) {
       ? 'bg-red-500'
       : 'bg-neutral-500';
 
+  const customActivity = lanyardData?.activities?.find((a: any) => a.type === 0);
+
   return (
     <main className="min-h-screen bg-neutral-900 text-neutral-100 p-6 md:p-12 max-w-5xl mx-auto space-y-8">
-      {/* Navigation Back Button */}
+      {/* Back Button */}
       <button
         onClick={() => router.back()}
         className="inline-flex items-center gap-2 text-xs font-bold bg-neutral-800 hover:bg-neutral-700 text-neutral-300 px-3 py-1.5 rounded-lg border border-neutral-700 transition cursor-pointer"
@@ -75,61 +76,103 @@ export default function ProfileClient({ memberId }: { memberId: string }) {
         ← Back
       </button>
 
-      {/* Profile Header Card */}
+      {/* Profile Banner & Header */}
       <header className="bg-neutral-800 border border-neutral-700 rounded-2xl overflow-hidden shadow-xl">
-        <div className={`h-28 bg-gradient-to-r ${profile.accentColor}`} />
-        <div className="p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-end gap-6 -mt-16 sm:-mt-20">
-          <div className="relative">
-            <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-neutral-900 border-4 border-neutral-800 overflow-hidden shadow-2xl flex items-center justify-center font-black text-3xl text-yellow-300">
-              {profile.avatarUrl ? (
-                <img
-                  src={profile.avatarUrl}
-                  alt={profile.name}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLElement).style.display = 'none';
-                  }}
+        <div className={`h-32 bg-gradient-to-r ${profile.accentColor}`} />
+        
+        <div className="p-6 sm:p-8 space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 -mt-20 sm:-mt-24">
+            <div className="relative">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-neutral-900 border-4 border-neutral-800 overflow-hidden shadow-2xl flex items-center justify-center font-black text-3xl text-yellow-300">
+                {profile.avatarUrl ? (
+                  <img
+                    src={profile.avatarUrl}
+                    alt={profile.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.display = 'none';
+                    }}
+                  />
+                ) : (
+                  profile.name[0]
+                )}
+              </div>
+              {profile.discordUserId && (
+                <span
+                  title={`Discord Status: ${discordStatus}`}
+                  className={`absolute bottom-2 right-2 w-5 h-5 rounded-full border-2 border-neutral-800 ${statusColor}`}
                 />
-              ) : (
-                profile.name[0]
               )}
             </div>
-            {profile.discordUserId && !profile.discordUserId.includes('YOUR_DISCORD') && (
-              <span
-                title={`Discord Status: ${discordStatus}`}
-                className={`absolute bottom-2 right-2 w-5 h-5 rounded-full border-2 border-neutral-800 ${statusColor}`}
-              />
-            )}
+
+            {/* Social Links Bar */}
+            <div className="flex flex-wrap gap-2 pt-2 sm:pt-0">
+              {profile.socials.steam && (
+                <a
+                  href={profile.socials.steam}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-neutral-900 hover:bg-neutral-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-neutral-700 text-neutral-200 transition"
+                >
+                  🎮 Steam
+                </a>
+              )}
+              {profile.socials.spotify && (
+                <a
+                  href={profile.socials.spotify}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-neutral-900 hover:bg-neutral-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-neutral-700 text-green-400 transition"
+                >
+                  🎧 Spotify
+                </a>
+              )}
+              {profile.socials.discord && (
+                <span className="bg-neutral-900 text-xs font-bold px-3 py-1.5 rounded-lg border border-neutral-700 text-indigo-300">
+                  💬 @{profile.socials.discord}
+                </span>
+              )}
+            </div>
           </div>
 
-          <div className="space-y-1 flex-1">
-            <h1 className="text-3xl sm:text-4xl font-black text-white">{profile.fullName}</h1>
-            <p className="text-xs sm:text-sm font-bold text-yellow-300">{profile.title}</p>
-            <p className="text-xs text-neutral-400">{profile.bio}</p>
+          {/* Name & Bio cleanly situated in dark container */}
+          <div className="space-y-2 pt-2">
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-black text-white">{profile.fullName}</h1>
+              <p className="text-xs sm:text-sm font-bold text-yellow-300 mt-0.5">{profile.title}</p>
+            </div>
+            <p className="text-xs sm:text-sm text-neutral-300 max-w-3xl leading-relaxed">{profile.bio}</p>
+            
+            {/* Discord Activity Status */}
+            {customActivity && (
+              <div className="bg-neutral-900/80 border border-neutral-700/80 rounded-lg p-3 text-xs text-neutral-300 flex items-center gap-3">
+                <span className="animate-pulse">🟢</span>
+                <div>
+                  <span className="font-bold text-white block">Playing / Activity: {customActivity.name}</span>
+                  {customActivity.details && <span className="text-neutral-400 block">{customActivity.details}</span>}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </header>
 
-      {/* Vitals Grid */}
-      <section className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      {/* Vitals Grid (Takeaway removed, location has flag) */}
+      <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-neutral-800 border border-neutral-700 rounded-xl p-4 text-center">
           <p className="text-[10px] uppercase font-bold text-neutral-400">Age & Zodiac</p>
           <p className="text-sm font-black text-yellow-300">{age}</p>
           <p className="text-xs text-neutral-300 font-semibold mt-0.5">{zodiac}</p>
         </div>
         <div className="bg-neutral-800 border border-neutral-700 rounded-xl p-4 text-center">
-          <p className="text-[10px] uppercase font-bold text-neutral-400">Location</p>
+          <p className="text-[10px] uppercase font-bold text-neutral-400">Location & Country</p>
           <p className="text-sm font-black text-white">{profile.location}</p>
-          <p className="text-xs text-neutral-400">{profile.nationality}</p>
+          <p className="text-xs text-neutral-300 font-semibold mt-0.5">{profile.nationality}</p>
         </div>
         <div className="bg-neutral-800 border border-neutral-700 rounded-xl p-4 text-center">
-          <p className="text-[10px] uppercase font-bold text-neutral-400">Height / Weight</p>
+          <p className="text-[10px] uppercase font-bold text-neutral-400">Height & Weight</p>
           <p className="text-sm font-black text-white">{profile.height}</p>
-          <p className="text-xs text-neutral-400">{profile.weight}</p>
-        </div>
-        <div className="bg-neutral-800 border border-neutral-700 rounded-xl p-4 text-center">
-          <p className="text-[10px] uppercase font-bold text-neutral-400">Takeaway Order</p>
-          <p className="text-xs font-bold text-yellow-300 truncate mt-1">{profile.takeawayOrder}</p>
+          <p className="text-xs text-neutral-400 mt-0.5">{profile.weight}</p>
         </div>
       </section>
 
@@ -139,35 +182,36 @@ export default function ProfileClient({ memberId }: { memberId: string }) {
           🖥️ Hardware & Rig Setup
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-neutral-300">
-          <div className="bg-neutral-900/60 p-3 rounded-lg border border-neutral-750">
+          <div className="bg-neutral-900/60 p-3 rounded-lg border border-neutral-700">
             <span className="text-neutral-400 font-bold block">CPU:</span> {profile.hardware.cpu}
           </div>
-          <div className="bg-neutral-900/60 p-3 rounded-lg border border-neutral-750">
+          <div className="bg-neutral-900/60 p-3 rounded-lg border border-neutral-700">
             <span className="text-neutral-400 font-bold block">GPU:</span> {profile.hardware.gpu}
           </div>
-          <div className="bg-neutral-900/60 p-3 rounded-lg border border-neutral-750">
+          <div className="bg-neutral-900/60 p-3 rounded-lg border border-neutral-700">
             <span className="text-neutral-400 font-bold block">Headset:</span> {profile.hardware.headset}
           </div>
-          <div className="bg-neutral-900/60 p-3 rounded-lg border border-neutral-750">
+          <div className="bg-neutral-900/60 p-3 rounded-lg border border-neutral-700">
             <span className="text-neutral-400 font-bold block">Other Specs:</span> {profile.hardware.other}
           </div>
         </div>
       </section>
 
-      {/* Favorite Shows & Anime */}
+      {/* Favorite Shows & Anime with Images */}
       {profile.favoriteShows && profile.favoriteShows.length > 0 && (
-        <section className="bg-neutral-800 border border-neutral-700 rounded-2xl p-6 space-y-3">
-          <h2 className="text-lg font-bold text-yellow-300 flex items-center gap-2">
-            📺 Favorite Shows & Anime
-          </h2>
-          <div className="flex flex-wrap gap-2">
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-yellow-300">📺 Favorite Shows & Anime</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {profile.favoriteShows.map((show, i) => (
-              <span
+              <div
                 key={i}
-                className="bg-neutral-900 border border-neutral-700 text-neutral-200 text-xs font-bold px-3 py-1.5 rounded-lg"
+                className="bg-neutral-800 border border-neutral-700 rounded-xl overflow-hidden shadow flex flex-col group hover:border-neutral-500 transition"
               >
-                {show}
-              </span>
+                <img src={show.imageUrl} alt={show.title} className="w-full h-48 object-cover" />
+                <div className="p-3 text-center bg-neutral-800 flex-1 flex items-center justify-center">
+                  <h3 className="font-bold text-xs text-white group-hover:text-yellow-300 transition">{show.title}</h3>
+                </div>
+              </div>
             ))}
           </div>
         </section>
@@ -183,7 +227,7 @@ export default function ProfileClient({ memberId }: { memberId: string }) {
                 key={i}
                 className="bg-neutral-800 border border-neutral-700 rounded-xl overflow-hidden shadow flex flex-col"
               >
-                <img src={game.imageUrl} alt={game.title} className="w-full h-32 object-cover" />
+                <img src={game.imageUrl} alt={game.title} className="w-full h-36 object-cover" />
                 <div className="p-3">
                   <h3 className="font-bold text-sm text-white">{game.title}</h3>
                   <p className="text-xs text-neutral-400 mt-0.5">{game.roleOrNote}</p>
@@ -194,7 +238,7 @@ export default function ProfileClient({ memberId }: { memberId: string }) {
         </section>
       )}
 
-      {/* Spotify Player & Music */}
+      {/* Spotify Player */}
       {profile.music?.spotifyEmbedUrl && (
         <section className="bg-neutral-800 border border-neutral-700 rounded-2xl p-6 space-y-4">
           <h2 className="text-lg font-bold text-yellow-300">🎵 Favorite Music & Spotify</h2>
