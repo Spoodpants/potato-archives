@@ -21,11 +21,11 @@ export default function ArgumentsPage() {
   const argumentsList = [
     {
       id: 1,
-      title: "First Argument Title",
-      date: "October 2026",
-      youtubeEmbedId: "dQw4w9WgXcQ", // Replace with YouTube Video ID
-      involved: ["harry", "taylor", "samson"],
-      description: "Short description explaining what started the argument, key moments, and how it ended.",
+      title: "Harry wanting Samson to play Marvel Rivals",
+      date: "11th July 2026",
+      youtubeEmbedId: "l9OMy1Nt7pM", // Replace with YouTube Video ID (the string after v= in youtube link)
+      involved: ["harry", "samson"], // Listed names display their faces
+      description: "Harry wanted to play Marvel Rivals with Samson however Samson wasn't interested. Harry then began by saying it is because he only plays the same characters.",
     },
   ];
 
