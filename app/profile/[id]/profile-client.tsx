@@ -1,8 +1,8 @@
 'use client';
 
+import { PROFILES_DATA } from '../data';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { PROFILES_DATA } from '../data';
 
 function getAgeAndZodiac(birthdateStr: string) {
   if (!birthdateStr) return { age: 'N/A', zodiac: 'Unknown' };

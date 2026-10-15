@@ -4,11 +4,12 @@ import ProfileClient from './profile-client';
 import { PROFILES_DATA } from '../data';
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const member = PROFILES_DATA[params.id.toLowerCase()];
+  const { id } = await params;
+  const member = PROFILES_DATA[id.toLowerCase()];
 
   if (!member) {
     return { title: 'Profile Not Found • Potato Archives' };
@@ -20,12 +21,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ProfilePage({ params }: Props) {
-  const member = PROFILES_DATA[params.id.toLowerCase()];
+export default async function ProfilePage({ params }: Props) {
+  const { id } = await params;
+  const member = PROFILES_DATA[id.toLowerCase()];
 
   if (!member) {
     notFound();
   }
 
-  return <ProfileClient memberId={params.id.toLowerCase()} />;
+  return <ProfileClient memberId={id.toLowerCase()} />;
 }
