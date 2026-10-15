@@ -1,30 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Nav from "./nav";
 
 export const metadata: Metadata = {
   title: "Potato Archives • Home",
-  description: "The official home of our group's lore, members, inside jokes, and history.",
-  openGraph: {
-    title: "Potato Archives",
-    description: "The official home of our group's lore, members, inside jokes, and history.",
-    url: "https://potato-archives.vercel.app",
-    siteName: "Potato Archives",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Potato Archives Preview",
-      },
-    ],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Potato Archives",
-    description: "The official home of our group's lore, members, inside jokes, and history.",
-    images: ["/potato.png"],
-  },
+  description: "The official home of our group's lore, member profiles, and argument archives.",
 };
 
 export default function RootLayout({
@@ -35,6 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-neutral-900 text-neutral-100 antialiased">
+        <Nav />
         {children}
       </body>
     </html>
