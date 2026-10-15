@@ -26,6 +26,14 @@ export default function ArgumentsPage() {
       involved: ["harry", "samson"], // Listed names display their faces
       description: "Harry wanted to play Marvel Rivals with Samson however Samson wasn't interested. Harry then began by saying it is because he only plays the same characters.",
     },
+    {
+      id: 2,
+      title: "Harry and Maximus arguing over ban decisions",
+      date: "20th August 2026",
+      youtubeEmbedId: "Z1Fms_v84z0", // Replace with YouTube Video ID (the string after v= in youtube link)
+      involved: ["harry", "maximus"], // Listed names display their faces
+      description: "Harry complained about Max convincing him to ban Hou Yi when Artemis ended up being a way bigger problem.",
+    },
   ];
 
   return (
