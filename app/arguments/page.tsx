@@ -49,7 +49,31 @@ export default function ArgumentsPage() {
       youtubeEmbedId: "FtVYfl8yx34", // Replace with YouTube Video ID (the string after v= in youtube link)
       involved: ["harry", "samson"], // Listed names display their faces
       description: "Harry complained about Samson's performance in Marvel Rivals leading to some back and forth.",
-    }
+    },
+    {
+      id: 5,
+      title: "Harry and Maximus debating Taylor's Horus Ult",
+      date: "8th September 2026",
+      youtubeEmbedId: "PRFhwTN4LOc", // Replace with YouTube Video ID (the string after v= in youtube link)
+      involved: ["harry", "maximus"], // Listed names display their faces
+      description: "Harry and Maximus debating the value of Taylor's Horus Ult.",
+    },
+    {
+      id: 6,
+      title: "Harry and Samson debating who is the bigger burger in Marvel Rivals",
+      date: "21st September 2026",
+      youtubeEmbedId: "PURezFN2U8A", // Replace with YouTube Video ID (the string after v= in youtube link)
+      involved: ["harry", "samson"], // Listed names display their faces
+      description: "Harry and Samson go back and forth arguing who is the bigger burger.", 
+    },
+    {
+      id: 7,
+      title: "Harry and Samson arguing over who is the better Marvel Rivals player",
+      date: "21st September 2026",
+      youtubeEmbedId: "cKsd3DORwlU", // Replace with YouTube Video ID (the string after v= in youtube link)
+      involved: ["harry", "samson"], // Listed names display their faces
+      description: "Harry and Samson yet again argue over who is better.",
+    },
   ];
 
   // Dynamically calculate argument counts for each member
