@@ -34,6 +34,22 @@ export default function ArgumentsPage() {
       involved: ["harry", "maximus"], // Listed names display their faces
       description: "Harry complained about Max convincing him to ban Hou Yi when Artemis ended up being a way bigger problem.",
     },
+    {
+      id: 3,
+      title: "Harry and Samson debating over who is at fault during Solo Lane fight",
+      date: "30th August 2026",
+      youtubeEmbedId: "eIFpq_l1VJU", // Replace with YouTube Video ID (the string after v= in youtube link)
+      involved: ["harry", "samson"], // Listed names display their faces
+      description: "Harry saying Samson was at fault for not using Aegis whilst Samson argues that is unrealistic.",
+    },
+    {
+      id: 4,
+      title: "Harry complaining about Samson being bad at Marvel Rivals",
+      date: "31st August 2026",
+      youtubeEmbedId: "FtVYfl8yx34", // Replace with YouTube Video ID (the string after v= in youtube link)
+      involved: ["harry", "samson"], // Listed names display their faces
+      description: "Harry complained about Samson's performance in Marvel Rivals leading to some back and forth.",
+    }
   ];
 
   // Dynamically calculate argument counts for each member
@@ -92,7 +108,7 @@ export default function ArgumentsPage() {
                     {person.name}
                   </span>
                   <span className="text-xs font-medium text-neutral-400">
-                    {count} {count === 1 ? 'arg' : 'args'}
+                    {count} {count === 1 ? 'argument' : 'arguments'}
                   </span>
                 </div>
               </Link>
