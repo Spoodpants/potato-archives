@@ -1,14 +1,13 @@
-'use client';
+import Link from 'next/link';
+import type { Metadata } from 'next';
 
-import { useEffect } from 'react';
+export const metadata: Metadata = {
+  title: 'Potato Archives • Arguments',
+  description: 'Recorded footage, involved parties, and official summaries.',
+};
 
 export default function ArgumentsPage() {
-  // Force browser tab title to change on direct link load
-  useEffect(() => {
-    document.title = 'Potato Archives • Arguments';
-  }, []);
-
-  // Map of profile pictures matching your public folder image names
+  // Map of profile pictures and profile links
   const memberImages: Record<string, { name: string; image: string }> = {
     harry: { name: "Harry", image: "/harry.jpg" },
     matheesa: { name: "Matheesa", image: "/matheesa.jpg" },
@@ -54,7 +53,7 @@ export default function ArgumentsPage() {
               </span>
             </div>
 
-            {/* 1. Large Embedded Video Player */}
+            {/* 1. Embedded Video Player */}
             <div className="w-full aspect-video rounded-lg overflow-hidden bg-neutral-900 border border-neutral-700">
               <iframe
                 className="w-full h-full"
@@ -65,7 +64,7 @@ export default function ArgumentsPage() {
               ></iframe>
             </div>
 
-            {/* 2. Mini Square Avatars of Involved Members */}
+            {/* 2. Clickable Member Badges */}
             <div className="space-y-2">
               <span className="text-xs font-bold text-neutral-400 uppercase tracking-wider block">
                 Involved:
@@ -75,28 +74,29 @@ export default function ArgumentsPage() {
                   const person = memberImages[personKey];
                   if (!person) return null;
                   return (
-                    <div
+                    <Link
                       key={personKey}
-                      className="flex items-center gap-2 bg-neutral-900 border border-neutral-700 px-2.5 py-1.5 rounded-lg"
-                      title={person.name}
+                      href={`/profile/${personKey}`}
+                      className="flex items-center gap-2 bg-neutral-900 hover:bg-neutral-700 border border-neutral-700 px-2.5 py-1.5 rounded-lg transition select-none group"
+                      title={`View ${person.name}'s Profile`}
                     >
                       <div className="w-8 h-8 rounded-md overflow-hidden bg-neutral-800 border border-neutral-700 flex-shrink-0">
                         <img
                           src={person.image}
                           alt={person.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover group-hover:scale-105 transition"
                         />
                       </div>
-                      <span className="text-xs font-semibold text-neutral-200">
+                      <span className="text-xs font-semibold text-neutral-200 group-hover:text-yellow-300 transition">
                         {person.name}
                       </span>
-                    </div>
+                    </Link>
                   );
                 })}
               </div>
             </div>
 
-            {/* 3. Description Lines Underneath */}
+            {/* 3. Description Lines */}
             <div className="pt-2 border-t border-neutral-700/60">
               <p className="text-sm md:text-base text-neutral-300 leading-relaxed whitespace-pre-line">
                 {arg.description}
