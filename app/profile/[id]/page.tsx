@@ -1,22 +1,31 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import ProfileClient from './profile-client';
+import { PROFILES_DATA } from '../data';
 
 type Props = {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 };
 
-// Next.js Server Metadata: Sets the browser tab title permanently on initial load and refreshes
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const memberName = id ? id.charAt(0).toUpperCase() + id.slice(1) : 'Member';
+  const member = PROFILES_DATA[params.id.toLowerCase()];
+
+  if (!member) {
+    return { title: 'Profile Not Found • Potato Archives' };
+  }
 
   return {
-    title: `Potato Archives • ${memberName}`,
-    description: `Personal lore, stats, quotes, and individual history for ${memberName}.`,
+    title: `Potato Archives • ${member.name}'s Profile`,
+    description: `View profile statistics, hardware, favorites, and Steam stats for ${member.name}.`,
   };
 }
 
-export default async function ProfilePage({ params }: Props) {
-  const { id } = await params;
-  return <ProfileClient id={id} />;
+export default function ProfilePage({ params }: Props) {
+  const member = PROFILES_DATA[params.id.toLowerCase()];
+
+  if (!member) {
+    notFound();
+  }
+
+  return <ProfileClient memberId={params.id.toLowerCase()} />;
 }
