@@ -1,10 +1,10 @@
 'use client';
 
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 export default function ProfilePage() {
   const params = useParams();
+  const router = useRouter();
   const id = params.id as string;
 
   // Capitalize name for display
@@ -16,13 +16,13 @@ export default function ProfilePage() {
       <title>{`Potato Archives • ${memberName}`}</title>
 
       <main className="min-h-screen bg-neutral-900 text-neutral-100 p-6 md:p-12 max-w-5xl mx-auto space-y-8">
-        {/* Back Button */}
-        <Link
-          href="/"
-          className="inline-block bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-neutral-200 px-4 py-2 rounded-lg text-sm font-medium transition select-none"
+        {/* Dynamic Back Button */}
+        <button
+          onClick={() => router.back()}
+          className="inline-flex items-center gap-2 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-neutral-200 px-4 py-2 rounded-lg text-sm font-medium transition select-none cursor-pointer"
         >
-          ← Home
-        </Link>
+          ← Back
+        </button>
 
         {/* Header */}
         <header className="border-b border-neutral-800 pb-6 space-y-2">
@@ -38,7 +38,7 @@ export default function ProfilePage() {
         <section className="bg-neutral-800 border border-neutral-700 rounded-xl p-8 space-y-4">
           <h2 className="text-xl font-semibold text-white">Lore & Stats</h2>
           <p className="text-neutral-300 leading-relaxed">
-            This is {memberName}'s page.
+            This is {memberName}'s dedicated page. You can add unique sections here for stats, quotes, personal clips, or dedicated lore entries!
           </p>
         </section>
       </main>
