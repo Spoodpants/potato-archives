@@ -83,6 +83,7 @@ export const FREE_TO_PLAY_APPIDS = new Set<number>([
   2767030, // Marvel Rivals
   1203220, // NARAKA: BLADEPOINT
   1938090, // Call of Duty HQ / Warzone
+  2437170, // SMITE 2
 
   // MultiVersus AppIDs
   1818750, // MultiVersus (Beta)
