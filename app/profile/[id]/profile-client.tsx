@@ -105,37 +105,41 @@ export default function ProfileClient({ memberId }: { memberId: string }) {
               )}
             </div>
 
-            {/* Social Links Bar */}
+            {/* Social Links Bar (Instagram, TikTok, YouTube, Twitch, Steam, Spotify) */}
             <div className="flex flex-wrap gap-2 pt-2 sm:pt-0">
               {profile.socials.steam && (
-                <a
-                  href={profile.socials.steam}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-neutral-900 hover:bg-neutral-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-neutral-700 text-neutral-200 transition"
-                >
+                <a href={profile.socials.steam} target="_blank" rel="noopener noreferrer" className="bg-neutral-900 hover:bg-neutral-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-neutral-700 text-neutral-200 transition">
                   🎮 Steam
                 </a>
               )}
               {profile.socials.spotify && (
-                <a
-                  href={profile.socials.spotify}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-neutral-900 hover:bg-neutral-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-neutral-700 text-green-400 transition"
-                >
+                <a href={profile.socials.spotify} target="_blank" rel="noopener noreferrer" className="bg-neutral-900 hover:bg-neutral-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-neutral-700 text-green-400 transition">
                   🎧 Spotify
                 </a>
               )}
-              {profile.socials.discord && (
-                <span className="bg-neutral-900 text-xs font-bold px-3 py-1.5 rounded-lg border border-neutral-700 text-indigo-300">
-                  💬 @{profile.socials.discord}
-                </span>
+              {profile.socials.instagram && (
+                <a href={profile.socials.instagram} target="_blank" rel="noopener noreferrer" className="bg-neutral-900 hover:bg-neutral-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-neutral-700 text-pink-400 transition">
+                  📸 Instagram
+                </a>
+              )}
+              {profile.socials.tiktok && (
+                <a href={profile.socials.tiktok} target="_blank" rel="noopener noreferrer" className="bg-neutral-900 hover:bg-neutral-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-neutral-700 text-cyan-300 transition">
+                  🎬 TikTok
+                </a>
+              )}
+              {profile.socials.youtube && (
+                <a href={profile.socials.youtube} target="_blank" rel="noopener noreferrer" className="bg-neutral-900 hover:bg-neutral-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-neutral-700 text-red-400 transition">
+                  ▶️ YouTube
+                </a>
+              )}
+              {profile.socials.twitch && (
+                <a href={profile.socials.twitch} target="_blank" rel="noopener noreferrer" className="bg-neutral-900 hover:bg-neutral-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-neutral-700 text-purple-400 transition">
+                  💜 Twitch
+                </a>
               )}
             </div>
           </div>
 
-          {/* Name & Bio cleanly situated in dark container */}
           <div className="space-y-2 pt-2">
             <div>
               <h1 className="text-3xl sm:text-4xl font-black text-white">{profile.fullName}</h1>
@@ -143,25 +147,29 @@ export default function ProfileClient({ memberId }: { memberId: string }) {
             </div>
             <p className="text-xs sm:text-sm text-neutral-300 max-w-3xl leading-relaxed">{profile.bio}</p>
             
-            {/* Discord Activity Status */}
-            {customActivity && (
-              <div className="bg-neutral-900/80 border border-neutral-700/80 rounded-lg p-3 text-xs text-neutral-300 flex items-center gap-3">
-                <span className="animate-pulse">🟢</span>
-                <div>
-                  <span className="font-bold text-white block">Playing / Activity: {customActivity.name}</span>
-                  {customActivity.details && <span className="text-neutral-400 block">{customActivity.details}</span>}
-                </div>
+            {/* Live Discord Activity / Status */}
+            <div className="bg-neutral-900/80 border border-neutral-700/80 rounded-lg p-3 text-xs text-neutral-300 flex items-center gap-3">
+              <span className={`w-3 h-3 rounded-full ${statusColor}`} />
+              <div>
+                <span className="font-bold text-white block capitalize">
+                  Discord Status: {discordStatus}
+                </span>
+                {customActivity ? (
+                  <span className="text-neutral-400 block">Playing: {customActivity.name} {customActivity.details ? `- ${customActivity.details}` : ''}</span>
+                ) : (
+                  <span className="text-neutral-500 block">No active game/activity detected via Lanyard</span>
+                )}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Vitals Grid (Takeaway removed, location has flag) */}
+      {/* Vitals Grid */}
       <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-neutral-800 border border-neutral-700 rounded-xl p-4 text-center">
-          <p className="text-[10px] uppercase font-bold text-neutral-400">Age & Zodiac</p>
-          <p className="text-sm font-black text-yellow-300">{age}</p>
+          <p className="text-[10px] uppercase font-bold text-neutral-400">Age, Birthday & Zodiac</p>
+          <p className="text-sm font-black text-yellow-300">{age} ({profile.birthdate})</p>
           <p className="text-xs text-neutral-300 font-semibold mt-0.5">{zodiac}</p>
         </div>
         <div className="bg-neutral-800 border border-neutral-700 rounded-xl p-4 text-center">
@@ -197,7 +205,7 @@ export default function ProfileClient({ memberId }: { memberId: string }) {
         </div>
       </section>
 
-      {/* Favorite Shows & Anime with Images */}
+      {/* Favorite Shows & Anime */}
       {profile.favoriteShows && profile.favoriteShows.length > 0 && (
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-yellow-300">📺 Favorite Shows & Anime</h2>
@@ -238,18 +246,32 @@ export default function ProfileClient({ memberId }: { memberId: string }) {
         </section>
       )}
 
-      {/* Spotify Player */}
-      {profile.music?.spotifyEmbedUrl && (
+      {/* Music & Spotify Player Card */}
+      {profile.music && (
         <section className="bg-neutral-800 border border-neutral-700 rounded-2xl p-6 space-y-4">
-          <h2 className="text-lg font-bold text-yellow-300">🎵 Favorite Music & Spotify</h2>
-          <iframe
-            src={profile.music.spotifyEmbedUrl}
-            width="100%"
-            height="152"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-            className="rounded-xl border-0"
-          />
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <img
+              src={profile.music.artistImageUrl}
+              alt={profile.music.favoriteArtist}
+              className="w-16 h-16 rounded-xl object-cover border border-neutral-700"
+            />
+            <div>
+              <h2 className="text-lg font-bold text-yellow-300">🎵 Music & Favorite Artist</h2>
+              <p className="text-xs text-neutral-300 mt-0.5">
+                Favorite Artist: <span className="font-bold text-white">{profile.music.favoriteArtist}</span> ({profile.music.favoriteGenres})
+              </p>
+            </div>
+          </div>
+          {profile.music.spotifyEmbedUrl && (
+            <iframe
+              src={profile.music.spotifyEmbedUrl}
+              width="100%"
+              height="152"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              className="rounded-xl border-0"
+            />
+          )}
         </section>
       )}
     </main>
