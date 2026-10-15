@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 export default function ArgumentsPage() {
-  // Map of profile pictures and profile links
+  // Map of profile pictures matching your public folder image names
   const memberImages: Record<string, { name: string; image: string }> = {
     harry: { name: "Harry", image: "/harry.jpg" },
     matheesa: { name: "Matheesa", image: "/matheesa.jpg" },
@@ -36,6 +36,23 @@ export default function ArgumentsPage() {
     },
   ];
 
+  // Dynamically calculate argument counts for each member
+  const argumentCounts: Record<string, number> = {
+    harry: 0,
+    matheesa: 0,
+    maximus: 0,
+    samson: 0,
+    taylor: 0,
+  };
+
+  argumentsList.forEach((arg) => {
+    arg.involved.forEach((personKey) => {
+      if (argumentCounts[personKey] !== undefined) {
+        argumentCounts[personKey] += 1;
+      }
+    });
+  });
+
   return (
     <main className="min-h-screen bg-neutral-900 text-neutral-100 p-6 md:p-12 max-w-4xl mx-auto space-y-12">
       <header className="border-b border-neutral-800 pb-6 text-center space-y-2">
@@ -47,6 +64,44 @@ export default function ArgumentsPage() {
         </p>
       </header>
 
+      {/* Leaderboard / Argument Counters */}
+      <section className="bg-neutral-800 border border-neutral-700 rounded-xl p-5 space-y-3 shadow-lg">
+        <h2 className="text-xs font-bold text-neutral-400 uppercase tracking-wider text-center md:text-left">
+          Argument Leaderboard
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+          {Object.keys(memberImages).map((personKey) => {
+            const person = memberImages[personKey];
+            const count = argumentCounts[personKey] || 0;
+
+            return (
+              <Link
+                key={personKey}
+                href={`/profile/${personKey}`}
+                className="flex items-center gap-3 bg-neutral-900 hover:bg-neutral-700 border border-neutral-700 p-2.5 rounded-lg transition select-none group"
+              >
+                <div className="w-10 h-10 rounded-md overflow-hidden bg-neutral-800 border border-neutral-700 flex-shrink-0">
+                  <img
+                    src={person.image}
+                    alt={person.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition"
+                  />
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs font-bold text-neutral-200 group-hover:text-yellow-300 transition truncate">
+                    {person.name}
+                  </span>
+                  <span className="text-xs font-medium text-neutral-400">
+                    {count} {count === 1 ? 'arg' : 'args'}
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Arguments Feed */}
       <section className="space-y-12">
         {argumentsList.map((arg) => (
           <div
@@ -61,7 +116,7 @@ export default function ArgumentsPage() {
               </span>
             </div>
 
-            {/* 1. Embedded Video Player */}
+            {/* Embedded Video Player */}
             <div className="w-full aspect-video rounded-lg overflow-hidden bg-neutral-900 border border-neutral-700">
               <iframe
                 className="w-full h-full"
@@ -72,7 +127,7 @@ export default function ArgumentsPage() {
               ></iframe>
             </div>
 
-            {/* 2. Clickable Member Badges */}
+            {/* Clickable Member Badges */}
             <div className="space-y-2">
               <span className="text-xs font-bold text-neutral-400 uppercase tracking-wider block">
                 Involved:
@@ -104,7 +159,7 @@ export default function ArgumentsPage() {
               </div>
             </div>
 
-            {/* 3. Description Lines */}
+            {/* Description Lines */}
             <div className="pt-2 border-t border-neutral-700/60">
               <p className="text-sm md:text-base text-neutral-300 leading-relaxed whitespace-pre-line">
                 {arg.description}
